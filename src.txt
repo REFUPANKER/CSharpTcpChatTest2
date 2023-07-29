@@ -1,0 +1,139 @@
+// server start ================================================================
+// server start ================================================================
+// server start ================================================================
+
+
+using System;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
+
+public class TCPServer
+{
+    public static void Main()
+    {
+        int port = 12345;
+
+        try
+        {
+            // IP adresini al
+            IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
+            TcpListener listener = new TcpListener(ipAddress, port);
+
+            // Sunucuyu başlat
+            listener.Start();
+            Console.WriteLine("Sunucu başlatıldı. Bağlantı bekleniyor...");
+
+            while (true)
+            {
+                // İstemci bağlantısını kabul et
+                TcpClient client = listener.AcceptTcpClient();
+                Console.WriteLine("Yeni istemci bağlantısı kabul edildi.");
+
+                // İstemci için yeni bir thread başlat ve mesajları işle
+                ClientHandler clientHandler = new ClientHandler(client);
+                clientHandler.Start();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Hata: " + e.Message);
+        }
+    }
+}
+
+public class ClientHandler
+{
+    private TcpClient client;
+    private StreamReader reader;
+    private StreamWriter writer;
+
+    public ClientHandler(TcpClient client)
+    {
+        this.client = client;
+        reader = new StreamReader(client.GetStream());
+        writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
+    }
+
+    public void Start()
+    {
+        try
+        {
+            string inputLine;
+            while ((inputLine = reader.ReadLine()) != null)
+            {
+                Console.WriteLine("Gelen mesaj: " + inputLine);
+
+                // Gelen mesajı tüm istemcilere gönder
+                foreach (ClientHandler client in TCPServer.clientHandlers)
+                {
+                    client.Send(inputLine);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Hata: " + e.Message);
+        }
+        finally
+        {
+            // İstemciyi kapat
+            client.Close();
+        }
+    }
+
+    // İstemciye mesaj gönderme işlemi
+    public void Send(string message)
+    {
+        writer.WriteLine(message);
+    }
+}
+
+
+// server end ==================================================================
+// server end ==================================================================
+// server end ==================================================================
+// client start ================================================================
+// client start ================================================================
+// client start ================================================================
+
+
+
+using System;
+using System.IO;
+using System.Net.Sockets;
+
+public class TCPClient
+{
+    public static void Main()
+    {
+        string serverAddress = "127.0.0.1";
+        int port = 12345;
+
+        try
+        {
+            // Sunucuya bağlan
+            TcpClient client = new TcpClient(serverAddress, port);
+            Console.WriteLine("Sunucuya bağlanıldı.");
+
+            // Giden ve gelen veri akışlarını oluştur
+            StreamReader reader = new StreamReader(client.GetStream());
+            StreamWriter writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
+
+            string inputLine;
+            while ((inputLine = Console.ReadLine()) != null)
+            {
+                // Girişi sunucuya gönder
+                writer.WriteLine(inputLine);
+
+                // Sunucudan gelen mesajı oku ve ekrana yazdır
+                string response = reader.ReadLine();
+                Console.WriteLine("Sunucudan gelen mesaj: " + response);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Hata: " + e.Message);
+        }
+    }
+}

@@ -18,7 +18,7 @@ public class TcpServerController : ConsoleController
     {
         cwl($"Ears opening...");
         Thread HearAndSay = new Thread(() =>
-        { 
+        {
             string ipAddress = GetServerIpAddress();
             cwl("^-^ i found your ip (IpV4) :" + ipAddress);
             TcpListener ears = new TcpListener(IPAddress.Parse(ipAddress), port);
@@ -69,16 +69,16 @@ public class TcpServerController : ConsoleController
                 string? inputLine;
                 while ((inputLine = reader.ReadLine()) != null)
                 {
-                    Console.WriteLine("Message sent : " + inputLine);
-                    // cwl(EncDecController.DecryptToString(inputLine));
-                    writer.WriteLine("Message confirmed");
+                    if (inputLine != null)
+                    {
+                        Console.WriteLine("Message received : " + inputLine);
+                        // cwl(EncDecController.DecryptToString(inputLine));
+                        writer.WriteLine("Message confirmed");
+                    }
                 }
-            }
-            catch (Exception excp)
-            {
-                cwl("Ears heard wrong things x_x");
-                cwl(excp);
-            }
+            }catch (IOException){
+                cwl("Client disconnected");
+            }catch(Exception){}
             finally
             {
                 client.Close();

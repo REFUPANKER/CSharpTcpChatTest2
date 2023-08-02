@@ -7,13 +7,6 @@ Gives speed at accessing to console commands
 public class ConsoleController
 {
     /**<summary>
-    Non-Static Console Write Line
-    </summary>*/
-    public void cwl(Object msg)
-    {
-        System.Console.WriteLine(msg);
-    }
-    /**<summary>
     Static Console Write Line
     </summary>*/
     public static void cwl(Object msg, object? overloaded = null)
@@ -22,25 +15,11 @@ public class ConsoleController
     }
 
     /**<summary>
-    Non-Static Console Write
-    </summary>*/
-    public void cw(Object msg)
-    {
-        System.Console.Write(msg);
-    }
-    /**<summary>
     Static Console Write
     </summary>*/
     public static void cw(Object msg, object? overloaded = null)
     {
         System.Console.Write(msg);
-    }
-    /**<summary>
-    Non-Static Console Write
-    </summary>*/
-    public void cls()
-    {
-        Console.Clear();
     }
 
     /**<summary>

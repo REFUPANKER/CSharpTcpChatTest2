@@ -22,22 +22,21 @@ public class TcpClientController : ConsoleController
         StreamReader reader = new StreamReader(client.GetStream());
         StreamWriter writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
         try
-        { 
+        {
             cwl($"connected to server {serverAddress}");
             cwl("type $exit for exit");
             string? inputLine = "";
-            string? response;
+            string? response = "";
+            writer.WriteLine("add_client");
+            cwl(((response = reader.ReadLine()) != null) ? response : "");
             while ((inputLine = Console.ReadLine() + "") != "$exit")
             {
                 SendMessage(writer, inputLine);
-                response = reader.ReadLine();
-                if (response != null)
-                {
-                    cwl("[Server]" + response);
-                }
+                cwl((((response = reader.ReadLine()) != null && string.IsNullOrEmpty(response) == false) ? "\b\b\b\b"+response : ""));
             }
-            SendMessage(writer, "Client Disconnected");
-            reader.ReadLine();
+            writer.WriteLine("remove_client");
+            cwl("Press Enter key to continue");
+            Console.ReadKey();
         }
         catch (Exception e)
         {

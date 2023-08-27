@@ -28,12 +28,27 @@ public class TcpClientController : ConsoleController
             string? inputLine = "";
             string? response = "";
             writer.WriteLine("add_client");
-            cwl(((response = reader.ReadLine()) != null) ? response : "");
+            Thread th1 = new Thread(() =>
+            {
+                while (inputLine!="$exit")
+                {
+                    cwl(((response = reader.ReadLine()) != null) ? response : "");
+                }
+
+            });
+            th1.Start();
+            // th1.Join();
             while ((inputLine = Console.ReadLine() + "") != "$exit")
             {
                 SendMessage(writer, inputLine);
-                cwl((((response = reader.ReadLine()) != null && string.IsNullOrEmpty(response) == false) ? "\b\b\b\b"+response : ""));
+
+                // Thread th2=new Thread(() =>
+                // {
+                //     cwl((((response = reader.ReadLine()) != null && string.IsNullOrEmpty(response) == false) ? "\b\b\b\b" + response : ""));
+                // });
+                // th2.Start();
             }
+            writer.WriteLine("$exit");
             writer.WriteLine("remove_client");
             cwl("Press Enter key to continue");
             Console.ReadKey();

@@ -1,0 +1,15 @@
+C:\Users\Computer\Documents\Software\CSharp\TcpChatTest2\bin\Debug\net7.0\TcpChatTest2.exe
+C:\Users\Computer\Documents\Software\CSharp\TcpChatTest2\bin\Debug\net7.0\TcpChatTest2.deps.json
+C:\Users\Computer\Documents\Software\CSharp\TcpChatTest2\bin\Debug\net7.0\TcpChatTest2.runtimeconfig.json
+C:\Users\Computer\Documents\Software\CSharp\TcpChatTest2\bin\Debug\net7.0\TcpChatTest2.dll
+C:\Users\Computer\Documents\Software\CSharp\TcpChatTest2\bin\Debug\net7.0\TcpChatTest2.pdb
+C:\Users\Computer\Documents\Software\CSharp\TcpChatTest2\obj\Debug\net7.0\TcpChatTest2.csproj.AssemblyReference.cache
+C:\Users\Computer\Documents\Software\CSharp\TcpChatTest2\obj\Debug\net7.0\TcpChatTest2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Computer\Documents\Software\CSharp\TcpChatTest2\obj\Debug\net7.0\TcpChatTest2.AssemblyInfoInputs.cache
+C:\Users\Computer\Documents\Software\CSharp\TcpChatTest2\obj\Debug\net7.0\TcpChatTest2.AssemblyInfo.cs
+C:\Users\Computer\Documents\Software\CSharp\TcpChatTest2\obj\Debug\net7.0\TcpChatTest2.csproj.CoreCompileInputs.cache
+C:\Users\Computer\Documents\Software\CSharp\TcpChatTest2\obj\Debug\net7.0\TcpChatTest2.dll
+C:\Users\Computer\Documents\Software\CSharp\TcpChatTest2\obj\Debug\net7.0\refint\TcpChatTest2.dll
+C:\Users\Computer\Documents\Software\CSharp\TcpChatTest2\obj\Debug\net7.0\TcpChatTest2.pdb
+C:\Users\Computer\Documents\Software\CSharp\TcpChatTest2\obj\Debug\net7.0\TcpChatTest2.genruntimeconfig.cache
+C:\Users\Computer\Documents\Software\CSharp\TcpChatTest2\obj\Debug\net7.0\ref\TcpChatTest2.dll

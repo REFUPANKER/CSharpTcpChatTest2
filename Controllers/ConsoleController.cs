@@ -29,4 +29,30 @@ public class ConsoleController
     {
         Console.Clear();
     }
+
+    public static string randomId(int length)
+    {
+        Random rnd = new Random();
+        string res = "";
+        for (int i = 0; i < length; i++)
+        {
+            switch (rnd.Next(0, 3))
+            {
+                case 0:
+                    res += ((char)rnd.Next(65, 91));
+                    break;
+                case 1:
+                    res += ((char)rnd.Next(97, 122));
+                    break;
+                case 2:
+                    res += ((char)rnd.Next(48, 57));
+                    break;
+                default:
+                    System.Console.WriteLine("rnd 3");
+                    break;
+            }
+        }
+        return res;
+    }
+
 }

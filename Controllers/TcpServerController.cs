@@ -1,7 +1,6 @@
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
-
 public class TcpServerController : ConsoleController
 {
     private TcpClientController ctrlClient = new TcpClientController();
@@ -13,7 +12,6 @@ public class TcpServerController : ConsoleController
         cwl("o_O Server Controller created");
         StartToListen();
     }
-
     private void StartToListen()
     {
         cwl($"Ears opening...");
@@ -71,17 +69,72 @@ public class TcpServerController : ConsoleController
                 {
                     if (inputLine != null)
                     {
-                        Console.WriteLine("Message received : " + inputLine);
-                        // cwl(EncDecController.DecryptToString(inputLine));
-                        writer.WriteLine("Message confirmed");
+
+                        if (inputLine.StartsWith("$") == false)
+                        {
+                            cwl(EncDecController.DecryptToString(inputLine));
+                        }
+                        else
+                        {
+                            Console.WriteLine("Command request for \"" + inputLine + "\"");
+                            string[] inputArgs = inputLine.Split(" ");
+                            switch (inputArgs[0])
+                            {
+                                case "$add_client":
+                                    cwl("Client add command received");
+                                    break;
+                                case "$echo":
+                                    writer.WriteLine("echo check");
+                                    break;
+                                case "$file":
+                                    try
+                                    {
+                                        byte[] filedata = File.ReadAllBytes(inputArgs[1]);
+                                        string filebytestr = "";
+                                        int perc = 0;
+                                        cw("Reading file %");
+                                        for (int i = 0; i < filedata.Length; i++)
+                                        {
+                                            perc = ((i * 100) / filedata.Length) + 1;
+                                            filebytestr += filedata[i];
+                                            if (i + 1 < filedata.Length) { filebytestr += ","; }
+                                            cw(perc);
+                                            for (int j = 0; j < perc.ToString().Length; j++)
+                                            {
+                                                cw("\b");
+                                            }
+                                        }
+                                        cwl("");
+                                        writer.WriteLine("$receive");
+                                        writer.WriteLine(filebytestr);
+                                    }
+                                    catch
+                                    {
+                                        cwl("cant send file");
+                                    }
+                                    break;
+                                case "$exit":
+                                    cwl("Exit command sent");
+                                    inputLine = null;
+                                    throw new IOException();
+                                default:
+                                    cwl("input not command");
+                                    break;
+                            }
+                        }
                     }
                 }
-            }catch (IOException){
+            }
+            catch (IOException)
+            {
                 cwl("Client disconnected");
-            }catch(Exception){}
+            }
+            catch (Exception) { }
             finally
             {
                 client.Close();
+                writer.Close();
+                reader.Close();
             }
         });
         cleintThread.Start();
